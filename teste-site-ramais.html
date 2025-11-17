@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Ramais Internos - Layout Responsivo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Variáveis de Cores Base (Claro Padrão) */
+        :root {
+            --bg-body: #f4f4f4;
+            --color-text: #333;
+            --bg-header: #ffffff;
+            --border-header: #e0e0e0;
+            --bg-icon-button: #f0f0f0;
+            --color-icon-button: #555;
+            --bg-icon-button-hover: #e0e0e0;
+            --bg-sector-block: #ffffff;
+            --box-shadow-sector-block: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --border-table: #ddd;
+            --bg-contact-row: #deebf7;
+            --bg-highlight-yellow: #ffff00;
+            --color-highlight-yellow: #333; /* Para garantir contraste */
+            --bg-dropdown: white;
+            --border-dropdown: #ccc;
+            --color-dropdown-item: #333;
+            --bg-dropdown-item-hover: #f0f0f0;
+        }
+
+        /* --- Modo Escuro --- */
+        body.dark-mode {
+            --bg-body: #121212;
+            --color-text: #e0e0e0;
+            --bg-header: #1f1f1f;
+            --border-header: #333;
+            --bg-icon-button: #333;
+            --color-icon-button: #e0e0e0;
+            --bg-icon-button-hover: #444;
+            --bg-sector-block: #2c2c2c;
+            --box-shadow-sector-block: 0 4px 8px rgba(0, 0, 0, 0.4);
+            --border-table: #444;
+            --bg-contact-row: #3c3c3c;
+            --bg-highlight-yellow: #707000;
+            --color-highlight-yellow: #f0f0f0;
+            --bg-dropdown: #2c2c2c;
+            --border-dropdown: #444;
+            --color-dropdown-item: #e0e0e0;
+            --bg-dropdown-item-hover: #444;
+        }
+
+        /* --- NOVO: Modo Suporte+ --- */
+        body.suporte-mode {
+            --bg-body: #242633; /* Fundo principal escuro */
+            --color-text: #e0e0e0; /* Texto claro */
+            --bg-header: #1a1b24; /* Cabeçalho mais escuro */
+            --border-header: #3a3c48;
+            --bg-icon-button: #3a3c48;
+            --color-icon-button: #e0e0e0;
+            --bg-icon-button-hover: #4f5263;
+            --bg-sector-block: #2e3040; /* Blocos mais claros que o fundo */
+            --box-shadow-sector-block: 0 6px 12px rgba(0, 0, 0, 0.3);
+            --border-table: #4a4d61;
+            --bg-contact-row: #3a3c48; /* Linha de contato */
+            --bg-highlight-yellow: #7e7e00; /* Amarelo adaptado */
+            --color-highlight-yellow: #f0f0f0;
+            --bg-dropdown: #2e3040;
+            --border-dropdown: #4a4d61;
+            --color-dropdown-item: #e0e0e0;
+            --bg-dropdown-item-hover: #3a3c48;
+        }
+
+        /* Estilos Básicos usando variáveis CSS */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: var(--bg-body);
+            color: var(--color-text);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Estilos do Menu */
+        .header-buttons {
+            position: relative;
+            display: flex;
+            gap: 10px;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: var(--bg-dropdown);
+            border: 1px solid var(--border-dropdown);
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 100;
+            min-width: 170px; /* Aumenta um pouco para os novos botões */
+            list-style: none;
+            padding: 5px 0;
+            margin: 0;
+            display: none;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-menu li button {
+            width: 100%;
+            text-align: left;
+            padding: 10px 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--color-dropdown-item);
+            display: flex; /* Para alinhar ícone e texto */
+            align-items: center;
+            gap: 8px; /* Espaço entre ícone e texto */
+        }
+
+        .dropdown-menu li button:hover {
+            background-color: var(--bg-dropdown-item-hover);
+        }
+
+        /* Estilos do Cabeçalho e Botões */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: var(--bg-header);
+            border-bottom: 1px solid var(--border-header);
+        }
+
+        .header-title {
+            margin: 0;
+            font-size: 24px;
+            color: var(--color-text);
+        }
+
+        .icon-button {
+            background-color: var(--bg-icon-button);
+            color: var(--color-icon-button);
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .icon-button:hover {
+            background-color: var(--bg-icon-button-hover);
+        }
+        
+        /* --- Estilos do Container Principal --- */
+        .sectors-container {
+            display: flex;
+            flex-wrap: wrap; 
+            gap: 20px; 
+            padding: 20px;
+            justify-content: center;
+        }
+
+        /* Estilo para cada bloco de setor */
+        .sector-block {
+            flex-basis: 300px;
+            flex-grow: 1;
+            max-width: 45%; 
+            box-shadow: var(--box-shadow-sector-block);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: var(--bg-sector-block);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        /* Estilos da Tabela Interna */
+        .sector-block table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 14px;
+        }
+        .sector-block th, .sector-block td {
+            border: 1px solid var(--border-table);
+            padding: 8px;
+            text-align: left;
+        }
+        
+        /* Estilos do Título do Setor (Cores fixas, independentes do modo) */
+        .header-blue { background-color: #0070c0; color: white; }
+        .header-red { background-color: #c00000; color: white; }
+        .header-darkblue { background-color: #1f4e79; color: white; }
+        .header-darkgreen { background-color: #70ad47; color: white; }
+        .header-darkorange { background-color: #c45911; color: white; }
+        .sector-block th {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Estilos de Destaque */
+        .highlight-yellow { 
+            background-color: var(--bg-highlight-yellow) !important; 
+            color: var(--color-highlight-yellow) !important;
+        }
+        .highlight-bold { font-weight: bold; }
+        .contact-row td { 
+            background-color: var(--bg-contact-row) !important; 
+        }
+        .whatsapp-icon { font-weight: bold; }
+
+        /* --- Media Query para Responsividade --- */
+        @media (max-width: 768px) {
+            .sector-block {
+                max-width: 100%;
+                flex-basis: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <h1 class="header-title">Ramais por Setor</h1>
+        <div class="header-buttons">
+            <button class="icon-button" id="menuButton" title="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="dropdown-menu" id="dropdownMenu">
+                <li>
+                    <button id="lightModeToggle">
+                        <i class="fas fa-sun"></i> Modo Claro
+                    </button>
+                </li>
+                <li>
+                    <button id="darkModeToggle">
+                        <i class="fas fa-moon"></i> Modo Escuro
+                    </button>
+                </li>
+                <li>
+                    <button id="suporteModeToggle">
+                        <i class="fas fa-headset"></i> Modo Suporte+
+                    </button>
+                </li>
+            </ul>
+
+            <button class="icon-button" title="GitHub">
+                <i class="fab fa-github"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="sectors-container">
+
+        <div class="sector-block">
+            <table>
+                <thead>
+                    <tr><th colspan="2" class="header-blue">SUPORTE SAT</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Angélica</td><td>204</td></tr>
+                    <tr><td>Hugo</td><td>205</td></tr>
+                    <tr><td>Ivanzinho</td><td>201</td></tr>
+                    <tr><td>Johnny</td><td>202</td></tr>
+                    <tr><td>Leonardo Souza</td><td>203</td></tr>
+                    <tr><td>Lucas Passos</td><td>211</td></tr>
+                    <tr><td>Maria Eduarda</td><td>207</td></tr>
+                    <tr><td>Marcelo</td><td>208</td></tr>
+                    <tr><td>Matheus</td><td>209</td></tr>
+                    <tr><td>MT - Elder</td><td>512</td></tr>
+                    <tr><td>MT - Vitor Hugo</td><td>510</td></tr>
+                    <tr><td>VTG - Rodrigo</td><td>210</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="sector-block">
+            <table>
+                <thead>
+                    <tr><th colspan="2" class="header-red">DESENVOLVIMENTO</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Alberto</td><td>407</td></tr>
+                    <tr><td>Elvis</td><td>402</td></tr>
+                    <tr><td>Danilo</td><td>405</td></tr>
+                    <tr><td>Diego</td><td>404</td></tr>
+                    <tr><td>Gabriel Augusto</td><td>408</td></tr>
+                    <tr><td>Héliton</td><td>401</td></tr>
+                    <tr><td>Rafael</td><td>406</td></tr>
+                    <tr><td>Ruan</td><td>308</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="sector-block">
+            <table>
+                <thead>
+                    <tr><th colspan="2" class="header-darkgreen">SUPORTE SCPI</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Alison</td><td>306</td></tr>
+                    <tr><td>André</td><td class="highlight-yellow">307</td></tr>
+                    <tr><td>Antonielo</td><td>301</td></tr>
+                    <tr><td>João Paulo</td><td class="highlight-yellow">307</td></tr>
+                    <tr><td>Kaique</td><td>307</td></tr>
+                    <tr><td>Leonardo Teodoro</td><td>316</td></tr>
+                    <tr><td>Maxwell</td><td>303</td></tr>
+                    <tr><td>Rodolfo</td><td>313</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="sector-block">
+            <table>
+                <thead>
+                    <tr><th colspan="2" class="header-darkblue">DIRETORIA/RECEP</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Ivan</td><td>102</td></tr>
+                    <tr><td>Julio</td><td>101</td></tr>
+                    <tr><td>Mary</td><td>105</td></tr>
+                    <tr><td>Vidal</td><td>103</td></tr>
+                    <tr class="highlight-bold"><td>Michele</td><td>150</td></tr>
+                    
+                    <tr><th colspan="2" class="header-darkblue">RLZ</th></tr>
+                    <tr class="contact-row">
+                        <td class="whatsapp-icon">&#x1F4F1; (17) 98156-1145</td>
+                        <td></td>
+                    </tr>
+                    <tr class="contact-row">
+                        <td>(17) 3234-7277</td>
+                        <td></td>
+                    </tr>
+                    <tr class="contact-row">
+                        <td>Abrir portão:</td><td>**</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="sector-block">
+            <table>
+                <thead>
+                    <tr><th colspan="2" class="header-darkorange">SUPORTE SIP</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Carlos</td><td>315</td></tr>
+                    <tr><td>Lucas</td><td>312</td></tr>
+                    <tr><td>Marcio</td><td>305</td></tr>
+                    <tr><td>Renan</td><td class="highlight-yellow">314</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        const menuButton = document.getElementById('menuButton');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const lightModeToggle = document.getElementById('lightModeToggle'); // Novo botão
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const suporteModeToggle = document.getElementById('suporteModeToggle'); // Novo botão
+        const body = document.body;
+
+        // 1. Alternar o menu dropdown
+        menuButton.addEventListener('click', (event) => {
+            event.stopPropagation(); // Impede que o clique se propague para o document e feche o menu
+            dropdownMenu.classList.toggle('show');
+        });
+
+        // Fechar o menu se clicar fora dele
+        document.addEventListener('click', (event) => {
+            if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove('show');
+            }
+        });
+
+        // 2. Função para aplicar um modo de cor específico
+        function setMode(mode) {
+            body.classList.remove('dark-mode', 'suporte-mode'); // Remove todos os modos primeiro
+
+            if (mode === 'dark') {
+                body.classList.add('dark-mode');
+            } else if (mode === 'suporte') {
+                body.classList.add('suporte-mode');
+            }
+            // Se mode for 'light', nenhuma classe é adicionada, mantendo o padrão
+
+            localStorage.setItem('colorMode', mode); // Salva o modo atual
+
+            // Opcional: Atualizar ícones ou textos dos botões no menu para indicar o modo ativo
+            // Por simplicidade, não farei isso aqui, mas seria possível.
+        }
+
+        // 3. Listeners para os botões de modo
+        lightModeToggle.addEventListener('click', () => {
+            setMode('light');
+            dropdownMenu.classList.remove('show'); // Fecha o menu após a seleção
+        });
+
+        darkModeToggle.addEventListener('click', () => {
+            setMode('dark');
+            dropdownMenu.classList.remove('show');
+        });
+
+        suporteModeToggle.addEventListener('click', () => {
+            setMode('suporte');
+            dropdownMenu.classList.remove('show');
+        });
+
+        // 4. Carregar a preferência do Modo ao carregar a página
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedMode = localStorage.getItem('colorMode') || 'light'; // Padrão é 'light'
+            setMode(savedMode);
+        });
+    </script>
+</body>
+</html>
