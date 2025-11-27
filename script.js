@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    // código relacionado ao menu de temas
     const menuBotao = document.querySelector('.menu-botao');
     const menuDropdown = document.querySelector('.menu-dropdown');
     const temaClaroBtn = document.getElementById('temaClaro');
@@ -46,4 +48,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const savedMode = localStorage.getItem('colorMode') || 'claro'; 
     setMode(savedMode);
+
+    
+    // cod relacionado ao botão de copiar
+    document.getElementsByClassName('telefone').addEventListener('click',()=>{
+        const telefoneCopiado = document.getElementById('telefone').value;
+        navigator.clipboard.writeText(telefoneCopiado)
+    })
+
+
+    // informativo
+    document.getElementById('info').addEventListener('click',()=>{
+        document.getElementById('info').textContent("")
+    })
 });
+

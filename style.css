@@ -142,6 +142,16 @@ header {
     position: relative; 
 }
 
+#info{
+    padding: 1px 10Px;
+    margin-top: 20px;
+    /* background-color: var(--cor-fundo-rodape); */
+    color: var(--cor-texto-rodape);
+    text-align: left;
+    font-size: 0.75em;
+    width: 100%;
+}
+
 /* Botão do Menu */
 .menu-botao {
     background-color: var(--cor-fundo-menu-botao);
