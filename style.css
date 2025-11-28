@@ -147,7 +147,6 @@ header {
     margin-top: 20px;
     /* background-color: var(--cor-fundo-rodape); */
     color: var(--cor-texto-rodape);
-    text-align: left;
     font-size: 0.75em;
     width: 100%;
 }
